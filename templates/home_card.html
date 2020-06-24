@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+  home_card
+{% endblock title %}
+{% block body %}
+    {% if home_card.picture %}
+    <img src="{{home_card.picture.url}}" alt="No Image" style="float: left; width:400x; height:400px;background-size:cover;">
+    {% endif %}
+    <h3>City: {{home_card.city}}</h3><br>
+    <h4>address: {{home_card.address}}</h4><br>
+    <b><h3>Rent: {{home_card.rent}}</h3></b><br>
+    <h5>description: {{home_card.description}} </h5>
+    <a href="#"><p><button>add wishList</button></p></a>
+{% endblock body %}

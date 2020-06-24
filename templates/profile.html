@@ -1,0 +1,14 @@
+{ {% extends 'base.html' %}}
+{% block title %}
+  profile_card
+{% endblock title %}
+{% block body %}
+    <!-- {% if home_card.picture %}
+    <img src="{{home_card.picture.url}}" alt="No Image" style="float: left; width:400x; height:400px;background-size:cover;">
+    {% endif %} -->
+    <h3>Name: {{request.user.first_name}} {{request.user.last_name}}</h3><br>
+    <h4>Username: {{request.user.username}}</h4><br>
+    {{request.user.extended_reverse.age}}
+    {{request.user.extended_reverse.phone_number}}
+    <img src="{{request.user.extended_reverse.image.url}}" >
+{% endblock body %}

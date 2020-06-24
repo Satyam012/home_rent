@@ -1,0 +1,80 @@
+
+
+{% extends 'base.html' %}
+{% block style %}
+  <style>
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+      }
+
+      .title {
+        color: grey;
+        font-size: 18px;
+      }
+
+      button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+      }
+
+      button:hover, a:hover {
+        opacity: 0.7;
+      }
+      
+  </style>
+{% endblock style %}
+{% block title %}
+  all_category
+{% endblock title %}
+{% block head %}
+
+	{% load static %}
+  <!-- <link rel="stylesheet" href="{% static 'music/index.css' %}"> -->
+{% endblock head %}
+{% block body %}
+<br>
+
+{%if all_category_objects%}
+
+<div class="row">
+{% for list_object in all_category_objects %}
+	<div class="col-md-4 col-lg-4 col-xl-3 col-sm-6">
+		<div class="card" >
+      {% if list_object.picture %}
+      <img src="{{list_object.picture.url}}" alt="No Image" style="float: left; width:280x; height:280px;background-size:cover;">
+      {% endif %}
+      <h3>City: {{list_object.city}}</h3>
+      <h4>address: {{list_object.address}}</h4>
+      <b><h3>Rent: {{list_object.rent}}</h3></b>
+      <a href="/wishlist/{{list_object.id}}/"><p><button>add to wishList</button></p></a>
+      <a href="/{{list_object.id}}"><p><button>View</button></p></a>
+    </div>
+     <br>
+  </div>
+
+{% endfor %}
+</div>
+{%else%}
+<h3>You don't have any album</h3>
+{%endif%}
+{% endblock body %}
+
+

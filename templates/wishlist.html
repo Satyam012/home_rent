@@ -1,0 +1,25 @@
+{% extends 'base.html' %} 
+
+{% block title %}wish_list{% endblock %}
+
+{% block body %}
+  <br>
+
+<div class="row">
+    {% for list_object in extend_user_object.home_list.all %}
+        <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6">
+            <div class="card" >
+                {% if list_object.picture %}
+                <img src="{{list_object.picture.url}}" alt="No Image" style="float: left; width:280x; height:280px;background-size:cover;">
+                {% endif %}
+                <h3>City: {{list_object.city}}</h3>
+                <h4>address: {{list_object.address}}</h4>
+                <b><h3>Rent: {{list_object.rent}}</h3></b>
+                <a href="/{{list_object.id}}"><p><button>View</button></p></a>
+            </div>
+            <br>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
