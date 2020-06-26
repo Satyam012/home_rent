@@ -10,6 +10,8 @@ class Item(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="item", null=True)
     city = models.CharField(max_length=50)
     address =models.CharField(max_length=300)
+    latitude = models.IntegerField(null=True,blank=False)
+    longitude = models.IntegerField(null=True,blank=False)
     rent= models.IntegerField(null = True)
     description= models.CharField(max_length=500) 
     picture = models.FileField(null=True)
