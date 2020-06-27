@@ -56,7 +56,13 @@
 {% endblock head %}
 {% block body %}
 <br>
-
+<form action="{% url 'home_app:category' %}" method="POST">
+  {% csrf_token %}
+  <input type="number" name="latitude">
+  <input type="number" name="longitude">
+  <input type="radius" name="radius" >
+  <button name="getByCoordinate">SORT HOUSES BY LOCATION</button>
+</form>
 {%if all_category_objects%}
 
 <div class="row">
