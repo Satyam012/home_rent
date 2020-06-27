@@ -9,7 +9,11 @@ urlpatterns = [
     path('register/',views.register,name="register"),
     path("<int:home_id>/", views.category_home, name='category_home'),
     path('profile/',views.profile_card,name="profile_card"),
-    path('wishlist/<int:home_id>/',views.wish_list,name="wish_list"),
+    path('addwishlist/<int:home_id>/',views.addwishlist,name="wish_list"),
+    path('removewishlist/<int:home_id>/',views.removewishlist,name="wish_list"),
     path('wishlist/',views.allwishlist,name="allwishlist"),
+    path('yourhome/',views.yourhome,name="yourhome"),
+    path('addhome/',views.addhome,name="addhome"),
+    path('delete/<int:home_id>/',views.deletehome,name="deletehome"),
 ]
 

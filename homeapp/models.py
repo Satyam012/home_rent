@@ -12,7 +12,12 @@ class Item(models.Model):
     address =models.CharField(max_length=300)
     rent= models.IntegerField(null = True)
     description= models.CharField(max_length=500) 
+    number=models.IntegerField(null=True)
     picture = models.FileField(null=True)
+    kitchen = models.FileField(blank=True, null=True)   
+    bedroom1 = models.FileField(blank=True, null=True)   
+    bedroom2 = models.FileField(blank=True, null=True)
+    other = models.FileField(blank=True, null=True) 
     
 class extendedUser(models.Model):
     age = models.IntegerField(null=True)
@@ -22,6 +27,8 @@ class extendedUser(models.Model):
     home_list = models.ManyToManyField(Item,related_name="fav_home")
     def __str__(self):
         return  self.belongs_to.username +"'s wishList home"
+
+          
 
 
 

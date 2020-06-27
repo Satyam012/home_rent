@@ -60,7 +60,7 @@ def category_home(request,home_id):
 def profile_card(request):
     return render(request,'profile.html',{})   
 
-def wish_list(request,home_id):#addding to wishlist code
+def addwishlist(request,home_id):#addding to wishlist code
     #return HttpResponse('okkkkkkkkk')
     home_card = Item.objects.get(id=home_id)
     extend_user_object = extendedUser.objects.get(belongs_to= request.user)
@@ -69,8 +69,44 @@ def wish_list(request,home_id):#addding to wishlist code
     print(request.user.extended_reverse.home_list.all())
     return render(request,'all_categories.html',{'all_category_objects':all_category_objects})
 
+def removewishlist(request,home_id):
+    home_card = Item.objects.get(id=home_id)
+    extend_user_object = extendedUser.objects.get(belongs_to= request.user)
+    extend_user_object.home_list.remove(home_card)
+    all_category_objects = Item.objects.all()
+    print(request.user.extended_reverse.home_list.all())
+    return render(request,'all_categories.html',{'all_category_objects':all_category_objects})
+
 @login_required
 def allwishlist(request):
     extend_user_object = extendedUser.objects.get(belongs_to= request.user)
     return render(request,'wishlist.html',{'extend_user_object':extend_user_object})
+
+@login_required
+def yourhome(request):
+    all_object = Item.objects.filter(user=request.user)
+    return render(request,'yourhome.html',{'all_object':all_object})   
+
+def addhome(request):    
+    if 'submit' in request.POST:
+        city = request.POST['city']
+        address = request.POST['address']
+        rent = request.POST['rent']
+        number =request.POST['phone']
+        image =request.FILES['image']
+        description =request.POST['description']
+        bedroom1 =request.FILES['bedroom1']
+        bedroom2 =request.FILES['bedroom2']
+        kitchen =request.FILES['kitchen']
+        other =request.FILES['other']
+        new_item= Item(user=request.user,city=city,address=address,rent=rent,number=number,description=description,picture=image,bedroom1=bedroom1,bedroom2=bedroom2,kitchen=kitchen,other=other)
+        new_item.save()
+        return redirect('/home/')
+    return render(request,'addhome.html')
  
+def deletehome(request,home_id):
+     home_card = Item.objects.get(id=home_id)
+     if home_card.user==request.user:
+         home_card.delete()
+         
+     return redirect('/home/')    

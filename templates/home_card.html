@@ -2,13 +2,134 @@
 {% block title %}
   home_card
 {% endblock title %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'homepic.css' %}"> 
+{% endblock style %}
+  
 {% block body %}
-    {% if home_card.picture %}
-    <img src="{{home_card.picture.url}}" alt="No Image" style="float: left; width:400x; height:400px;background-size:cover;">
-    {% endif %}
-    <h3>City: {{home_card.city}}</h3><br>
-    <h4>address: {{home_card.address}}</h4><br>
-    <b><h3>Rent: {{home_card.rent}}</h3></b><br>
-    <h5>description: {{home_card.description}} </h5>
-    <a href="#"><p><button>add wishList</button></p></a>
+  <div>
+    <div>
+      {% if home_card.picture %}
+      <img src="{{home_card.picture.url}}" alt="No Image" style="float: left; width:400x; height:400px;background-size:cover;">
+      {% endif %}
+    </div>
+    <div>
+      <h3>City: {{home_card.city}}</h3><br>
+      <h4>address: {{home_card.address}}</h4><br>
+      <b><h3>Rent: {{home_card.rent}}</h3></b><br>
+      <h4>Contact Number: {{home_card.number}}</h4><br>
+      <h5>description: {{home_card.description}} </h5><br>
+      {% if homeobject in request.user.extended_reverse.home_list.all %}
+      <a href="/removewishlist/{{home_card.id}}/"><p><button>remove to wishList</button></p></a>
+      {%else%}
+      <a href="/addwishlist/{{home_card.id}}/"><p><button>add to wishList</button></p></a>
+      {%endif%}
+    </div>
+  </div>
+  <div>
+   
+    <h2 style="text-align:center">Lightbox</h2>
+
+<div class="row">
+  <div class="column">
+    <img src="{{home_card.bedroom1.url}}" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+  </div>
+  <div class="column">
+    <img src="{{home_card.bedroom2.url}}" style="width:100%" onclick="openModal();currentSlide(2)" class="hover-shadow cursor">
+  </div>
+  <div class="column">
+    <img src="{{home_card.kitchen.url}}" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
+  </div>
+  <div class="column">
+    <img src="{{home_card.other.url}}" style="width:100%" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+  </div>
+</div>
+
+<div id="myModal" class="modal">
+  <span class="close cursor" onclick="closeModal()">&times;</span>
+  <div class="modal-content">
+
+    <div class="mySlides">
+      <img src="{{home_card.bedroom1.url}}" style="width:100%">
+    </div>
+
+    <div class="mySlides">
+      <img src="{{home_card.bedroom2.url}}" style="width:100%">
+    </div>
+
+    <div class="mySlides">
+      <img src="{{home_card.kitchen.url}}" style="width:100%">
+    </div>
+    
+    <div class="mySlides">
+      <img src="{{home_card.other.url}}" style="width:100%">
+    </div>
+    
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+    <div class="caption-container">
+      <p id="caption"></p>
+    </div>
+
+
+    <div class="column">
+      <img class="demo cursor" src="{{home_card.bedroom1.url}}" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="{{home_card.bedroom2.url}}" style="width:100%" onclick="currentSlide(2)" alt="Snow">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="{{home_card.kitchen.url}}" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="{{home_card.other.url}}" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal() {
+  document.getElementById("myModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("myModal").style.display = "none";
+}
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+</script>
+  </div>
+
+
+    
+    
 {% endblock body %}

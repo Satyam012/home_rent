@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    yourhome
+{% endblock title %}
+
+{% block body %}
+<div class="row">
+    {% for homecard in all_object %}
+        <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6">
+            <div class="card" >
+                {% if homecard.picture %}
+                <img src="{{homecard.picture.url}}" alt="No Image" style="float: left; width:280x; height:280px;background-size:cover;">
+                {% endif %}
+                <h3>City: {{homecard.city}}</h3>
+                <h4>address: {{homecard.address}}</h4>
+                <b><h3>Rent: {{homecard.rent}}</h3></b>
+                <button><a href="/{{homecard.id}}/">View</a></button>
+                <button><a href="/delete/{{homecard.id}}/">Delete</a></button>
+            </div>
+            <br>
+        </div>
+    {% endfor %}
+</div>
+{% endblock body %}
+    
+    

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+addhome
+{% endblock title %}
+
+{% block body %}
+<form action="/addhome/" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+     City: <input type="text" name="city" placeholder="City Name" required=""><br>
+     address: <input type="text" name="address" placeholder="address" required=""><br>
+     Rent: <input type="number" name="rent" placeholder="Rent"><br>
+     Image: <input type="file" name="image" required><br>
+     Contact Number: <input type="tel" name="phone" placeholder="mobile no."><br>
+     description: <textarea name="description" rows="4" cols="50"></textarea><br>
+     bedroom1: <input type="file" name="bedroom1"><br>
+     bedroom2: <input type="file" name="bedroom2"><br>
+     kitchen: <input type="file" name="kitchen"><br>
+     other: <input type="file" name="other"><br>
+     <input type="submit" name="submit">
+</form>
+{% endblock body %}
+    
