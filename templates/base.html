@@ -29,11 +29,14 @@
            <ul class="menu">
               <li><a href="/home/"><i class="fa fa-home"></i> HOME</a></li>
               <li><a  href="/wishlist/"> wish List</a></li>
+              {% if user.is_staff %}
+              <li><a  href="/request/"> Request</a></li>
+              {% endif %}
               <li><a  href="/yourhome/">Your Home</a></li>
               <li><a  href="/addhome/">Add Home</a></li>
               <li><a  href="#"><i class="#"></i>about us</a></li>
               <li style="float:right;"><a  href="/logout/"> LOGOUT </a></li>
-              <li style="float:right;"><a  href="/profile/"> PROFILE </a></li>
+              <li style="float:right;"><a  href="/profile/{{user.id}}/"> PROFILE </a></li>
           </ul>
     </nav>
     {% block body %}

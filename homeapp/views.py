@@ -95,8 +95,10 @@ def category_home(request,home_id):
     home_card = Item.objects.get(id=home_id)
     return render(request,'home_card.html',{'home_card':home_card})
 
-def profile_card(request):
-    return render(request,'profile.html',{})   
+def profile_card(request,id):
+    # extend_user_belongs_to = User.objects.get(id = id)
+    userr= User.objects.get(id=id)
+    return render(request,'profile.html',{'userr':userr})   
 
 def addwishlist(request,home_id):#addding to wishlist code
     #return HttpResponse('okkkkkkkkk')
@@ -119,7 +121,11 @@ def removewishlist(request,home_id):
 def allwishlist(request):
     extend_user_object = extendedUser.objects.get(belongs_to= request.user)
     return render(request,'wishlist.html',{'extend_user_object':extend_user_object})
-
+@login_required
+def allHomes(request,user_id):
+    user_object= User.objects.get(id= user_id)
+    all_object = Item.objects.filter(user= user_object)
+    return render(request,'yourhome.html',{'all_object':all_object})   
 @login_required
 def yourhome(request):
     all_object = Item.objects.filter(user=request.user)
@@ -148,3 +154,29 @@ def deletehome(request,home_id):
          home_card.delete()
          
      return redirect('/home/')    
+
+def report(request,card_id):
+     home_card = Item.objects.get(id=card_id)
+     home_card.report=1   
+     home_card.save()
+     return render(request,'home_card.html',{'home_card':home_card})
+  
+@login_required     
+def homerequest(request):
+    if request.user.is_staff:
+        home=Item.objects.filter(report=1)
+        return render(request,'request.html',{'allhome':home})   
+    else:
+        raise Http404("You are not an admin")  
+
+def accept(request,card_id):
+    home_card = Item.objects.get(id=card_id)
+    home_card.report=2  
+    home_card.save() 
+    return redirect('/request/')
+
+def reject(request,card_id):
+    home_card = Item.objects.get(id=card_id)
+    home_card.report=0   
+    home_card.save()
+    return redirect('/request/')         

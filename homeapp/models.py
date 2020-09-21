@@ -16,10 +16,14 @@ class Item(models.Model):
     description= models.CharField(max_length=500) 
     number=models.IntegerField(null=True)
     picture = models.FileField(blank=True, null=True)
+    report =models.IntegerField(default=0)
     # kitchen = models.FileField(blank=True, null=True)   
     # bedroom1 = models.FileField(blank=True, null=True)   
     # bedroom2 = models.FileField(blank=True, null=True)
     # other = models.FileField(blank=True, null=True) 
+    def __str__(self):
+        return "Owner"+ self.user.username+ "-Location:"+ self.address + "-" + self.city
+    
     
 class extendedUser(models.Model):
     # age = models.IntegerField(null=True)

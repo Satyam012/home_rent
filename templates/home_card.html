@@ -8,6 +8,8 @@
 {% endblock style %}
   
 {% block body %}
+<a href="/report/{{home_card.id}}/"><p><button>Report</button></p></a><br><br>
+
   <div class="row">
     <div>
       {% if home_card.picture %}
@@ -15,21 +17,25 @@
       {% endif %}
     </div>
     <div>
+      
+      {% if home_card.report == 2 %}
+        <h2>Not Safe</h2><br>
+      {% endif %}
+        <h3>Name: <a href="/profile/{{home_card.user.id}}/">{{home_card.user.username}}</a></h3>
       <h3>City: {{home_card.city}}</h3><br>
       <h4>address: {{home_card.address}}</h4><br>
       <b><h3>Rent: {{home_card.rent}}</h3></b><br>
       <h4>Contact Number: {{home_card.number}}</h4><br>
       <h5>description: {{home_card.description}} </h5><br>
+      
       <!-- {% if homeobject in request.user.extended_reverse.home_list.all %}
       <a href="/removewishlist/{{home_card.id}}/"><p><button>remove to wishList</button></p></a>
       {%else%}
       <a href="/addwishlist/{{home_card.id}}/"><p><button>add to wishList</button></p></a>
       {%endif%} -->
     </div>
-  </div>
-  <div class="fb-comment-embed" data-href="http://127.0.0.1:8000/1/" data-include-parent="false" data-width=""></div>
-
-
     
+  </div>
+  <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments/home_rent_app/satyam_jaiswal1237/{{home_card.id}}" data-numposts="5" data-width=""></div>
     
 {% endblock body %}

@@ -7,8 +7,9 @@
     <img src="{{home_card.picture.url}}" alt="No Image" style="float: left; width:400x; height:400px;background-size:cover;">
     {% endif %} -->
     <!-- <h3>Name: {{request.user.first_name}} {{request.user.last_name}}</h3><br> -->
-    <h4>Username: {{request.user.username}}</h4><br>
+    <h4>Username: {{userr.username}}</h4><br>
     <!-- {{request.user.extended_reverse.age}}<br> -->
     <!-- {{request.user.extended_reverse.phone_number}}<br> -->
-    <img src="{{request.user.extended_reverse.image.url}}" style="width: 300px; height: 300px;" >
+    <img src="{{userr.extended_reverse.image.url}}" alt="No Image" style="width: 300px; height: 300px;" >
+    <a href="/allHome/{{userr.id}}">View {{userr.username}}'s all listed property </a>
 {% endblock body %}

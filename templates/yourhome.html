@@ -16,7 +16,9 @@
                 <h4>address: {{homecard.address}}</h4>
                 <b><h3>Rent: {{homecard.rent}}</h3></b>
                 <button><a href="/{{homecard.id}}/">View</a></button>
+                {% if user is homecart.user %}
                 <button><a href="/delete/{{homecard.id}}/">Delete</a></button>
+                {% endif %}
             </div>
             <br>
         </div>

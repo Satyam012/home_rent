@@ -1,0 +1,100 @@
+
+
+{% extends 'base.html' %}
+{% block style %}
+  <style>
+     body{
+      background: #bcdee7 url("https://images.unsplash.com/photo-1466200822534-36ddce4a978e?dpr=1&auto=format&crop=entropy&fit=crop&w=767&h=511&q=80&cs=tinysrgb") no-repeat center center;
+      background-size: cover;
+      background-color: #bcdee7;
+     }
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+      }
+
+      .title {
+        color: grey;
+        font-size: 18px;
+      }
+
+      button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+      }
+
+      button:hover, a:hover {
+        opacity: 0.7;
+      }
+      
+  </style>
+{% endblock style %}
+{% block title %}
+  all_category
+{% endblock title %}
+{% block head %}
+
+	{% load static %}
+  <!-- <link rel="stylesheet" href="{% static 'music/index.css' %}"> -->
+{% endblock head %}
+{% block body %}
+<br>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <form class="form-inline" action="{% url 'home_app:category' %}" method="POST">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="text" name="city" placeholder="City Name..." style="width: 50%;">
+    <button name="search" type="submit" style="float:right; width: 50%;">SORT HOUSES BY LOCATION</button>
+  </form>
+</nav>
+<!-- <form action="{% url 'home_app:category' %}" method="POST">
+  {% csrf_token %}
+  <input type="number" name="latitude">
+  <input type="number" name="longitude">
+  <input type="radius" name="radius" >
+  <button name="getByCoordinate">SORT HOUSES BY LOCATION</button>
+</form> -->
+{%if allhome%}
+
+<div class="row">
+{% for homeobject in allhome %}
+	<div class="col-md-4 col-lg-4 col-xl-3 col-sm-6">
+		<div class="card" >
+      {% if homeobject.picture %}
+      <img src="{{homeobject.picture.url}}" alt="No Image" style="float: left; width:280x; height:280px;background-size:cover;">
+      {% endif %}
+      <h3>City: {{homeobject.city}}</h3>
+      <h4>address: {{homeobject.address}}</h4>
+      <b><h3>Rent: {{homeobject.rent}}</h3></b>
+      <a href="/accept/{{homeobject.id}}/"><p>accept</p></a>
+      <a href="/reject/{{homeobject.id}}/"><p>reject</p></a>
+     
+      <a href="/{{homeobject.id}}"><p><button>View</button></p></a>
+    </div>
+     <br>
+  </div>
+
+{% endfor %}
+</div>
+{%else%}
+<h3>You don't have any album</h3>
+{%endif%}
+{% endblock body %}
+
+
