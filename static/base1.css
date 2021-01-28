@@ -3,11 +3,11 @@
 *,html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,label,fieldset,input,p,blockquote,th,td {
     margin: 0;
     padding: 0;
+    /* background-image:linear-gradient(skyblue,green); */
 }
 
 body {
-    background-image: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwallpapercave.com%2Fmusic-wallpaper-1920x1080&psig=AOvVaw3PK4xjO1DkNiqyHt0BKKnD&ust=1591972432180000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPDE3cv9-ekCFQAAAAAdAAAAABAD");
-    background-color: #cccccc;
+    background-image:linear-gradient(skyblue,green);
    }
 
 article,aside,figure,footer,header,hgroup,nav,section {
@@ -18,7 +18,7 @@ article,aside,figure,footer,header,hgroup,nav,section {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    
+    /* background-image:linear-gradient(skyblue,green); */
 }
 
 html {

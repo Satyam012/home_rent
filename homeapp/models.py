@@ -4,8 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
-class Image(models.Model):
-    image = models.FileField()
+# class Image(models.Model):
+#     image = models.FileField()
 class Item(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="item", null=True)
     city = models.CharField(max_length=50)

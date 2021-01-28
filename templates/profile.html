@@ -2,14 +2,35 @@
 {% block title %}
   profile_card
 {% endblock title %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'profile.css' %}"> 
+
 {% block body %}
     <!-- {% if home_card.picture %}
-    <img src="{{home_card.picture.url}}" alt="No Image" style="float: left; width:400x; height:400px;background-size:cover;">
+    
     {% endif %} -->
     <!-- <h3>Name: {{request.user.first_name}} {{request.user.last_name}}</h3><br> -->
-    <h4>Username: {{userr.username}}</h4><br>
+    <!-- <h4>Username: {{userr.username}}</h4><br> -->
+    <!-- <img src="{{home_card.picture.url}}" alt="No Image" style="float: left; width:400x; height:400px;background-size:cover;"> -->
     <!-- {{request.user.extended_reverse.age}}<br> -->
     <!-- {{request.user.extended_reverse.phone_number}}<br> -->
-    <img src="{{userr.extended_reverse.image.url}}" alt="No Image" style="width: 300px; height: 300px;" >
-    <a href="/allHome/{{userr.id}}">View {{userr.username}}'s all listed property </a>
+     <!-- <img src="{{userr.extended_reverse.image.url}}" alt="No Image" style="width: 300px; height: 300px;" > -->
+    <!-- <a href="/allHome/{{userr.id}}">View {{userr.username}}'s all listed property </a> -->
+
+    <div class="container" >
+      <div class="card" style="background-image:linear-gradient(blue,pink);">
+        <div class="border"></div>
+        <div class="avatar">
+          <img src="{{userr.extended_reverse.image.url}}" alt=""  style="width:300x; height:300px;">
+        </div>
+        <hr />
+        <div class="stats">
+          <h2>{{userr.username}}</h2>
+          <hr />
+          <div>
+            <h2><a href="/allHome/{{userr.id}}">View all properties.</a></h2>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endblock body %}
