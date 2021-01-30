@@ -61,13 +61,15 @@
     <button name="search" type="submit" style="float:right; width: 50%;">SORT HOUSES BY LOCATION</button>
   </form>
 </nav>
-<!-- <form action="{% url 'home_app:category' %}" method="POST">
+<form action="{% url 'home_app:category' %}" method="POST">
   {% csrf_token %}
-  <input type="number" name="latitude">
-  <input type="number" name="longitude">
+  <input type="text" name="latitude" id="latitude">
+  <input type="text" name="longitude" id = longitude>
   <input type="radius" name="radius" >
-  <button name="getByCoordinate">SORT HOUSES BY LOCATION</button>
-</form> -->
+  <button name="getByCoordinate">SORT HOUSES BY LAT LONG</button>
+</form> 
+<div id="googleMap" style="width:100%;height:400px;"></div>
+
 {%if all_category_objects%}
 
 <div class="row">
@@ -91,10 +93,59 @@
   </div>
 
 {% endfor %}
+
 </div>
 {%else%}
 <h3>You don't have any album</h3>
 {%endif%}
+<div id="googleMap" style="width:100%;height:400px;"></div>
+
+<script>
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(21.2514,81.6296),
+  zoom:12,
+};
+var marker;
+
+function placeMarker(location) {
+  if ( marker ) {
+    marker.setPosition(location);
+  } else {
+    marker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+  }
+}
+
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+map.addListener('click', function(e) {
+    placeMarker(e.latLng, map);
+    a = e.latLng;
+    lat =parseFloat(a.lat('get'));
+    long =parseFloat(a.lng('get'));
+    var lat_text_input = document.getElementById('latitude');
+    var long_text_input = document.getElementById('longitude');
+    lat_text_input.value = lat;
+    long_text_input.value = long;
+
+});
+}
+
+/*
+function placeMarker(position, map) {
+    var marker = new google.maps.Marker({
+        position: position,
+        map: map
+    });
+    map.panTo(position);
+}
+*/
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8SoF_iIZGABFQKJOvQwqGZ5bf8_R20H0&callback=myMap"></script>
+
 {% endblock body %}
 
 
