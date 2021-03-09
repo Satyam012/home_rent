@@ -1,36 +1,65 @@
-{ {% extends 'base.html' %}}
+{% extends 'base.html' %}
 {% block title %}
-  profile_card
+profile_card
 {% endblock title %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'profile.css' %}"> 
+{% block style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  body {
+    background-image: url('https://cdn.wallpapersafari.com/45/16/JALWY4.jpg');
+  }
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+
+  .title {
+    color: grey;
+    font-size: 18px;
+  }
+
+  button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .abc {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+  }
+
+  button:hover,
+  a:hover {
+    opacity: 0.7;
+  }
+</style>
+{% endblock style %}
 
 {% block body %}
-    <!-- {% if home_card.picture %}
-    
-    {% endif %} -->
-    <!-- <h3>Name: {{request.user.first_name}} {{request.user.last_name}}</h3><br> -->
-    <!-- <h4>Username: {{userr.username}}</h4><br> -->
-    <!-- <img src="{{home_card.picture.url}}" alt="No Image" style="float: left; width:400x; height:400px;background-size:cover;"> -->
-    <!-- {{request.user.extended_reverse.age}}<br> -->
-    <!-- {{request.user.extended_reverse.phone_number}}<br> -->
-     <!-- <img src="{{userr.extended_reverse.image.url}}" alt="No Image" style="width: 300px; height: 300px;" > -->
-    <!-- <a href="/allHome/{{userr.id}}">View {{userr.username}}'s all listed property </a> -->
 
-    <div class="container" >
-      <div class="card" style="background-image:linear-gradient(blue,pink);">
-        <div class="border"></div>
-        <div class="avatar">
-          <img src="{{userr.extended_reverse.image.url}}" alt=""  style="width:300x; height:300px;">
-        </div>
-        <hr />
-        <div class="stats">
-          <h2>{{userr.username}}</h2>
-          <hr />
-          <div>
-            <h2><a href="/allHome/{{userr.id}}">View all properties.</a></h2>
-          </div>
-        </div>
-      </div>
-    </div>
+
+<div class="card" style="background-image: url('https://t4.ftcdn.net/jpg/03/01/33/73/360_F_301337371_FYInUPUpOTAYqH1eFJ06PXQKukva7dvD.jpg');">
+  <img src="{{userr.extended_reverse.image.url}}" alt="John" style="width:300px; height: 300px;">
+  <h1>{{userr.username}}</h1>
+  <p class="title">CEO & Founder, </p>
+  <div style="margin: 24px 0;" class="abc">
+    <i class="fa fa-dribbble"></i>
+    <i class="fa fa-twitter"></i>
+    <i class="fa fa-linkedin"></i>
+    <i class="fa fa-facebook"></i>
+  </div>
+  <p><a href="/allHome/{{userr.id}}"><button>View Property</button></a></p>
+</div>
 {% endblock body %}

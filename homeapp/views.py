@@ -139,13 +139,13 @@ def addhome(request):
         number =request.POST['phone']
         image =request.FILES['image']
         description =request.POST['description']
-        lat = float(request.POST['latitude'])
-        lon = float(request.POST['longitude'])
+        # lat = float(request.POST['latitude'])
+        # lon = float(request.POST['longitude'])
         # bedroom1 =request.FILES['bedroom1']
         # bedroom2 =request.FILES['bedroom2']
         # kitchen =request.FILES['kitchen']
         # other =request.FILES['other']
-        new_item= Item(user=request.user,city=city,address=address,rent=rent,number=number,description=description,picture=image,latitude = lat,longitude= lon)
+        new_item= Item(user=request.user,city=city,address=address,rent=rent,number=number,description=description,picture=image)
         new_item.save()
         return redirect('/home/')
     return render(request,'addhome.html')

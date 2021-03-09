@@ -1,25 +1,50 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
+{% block style %}
+<style>
+    body {
+    background-image: url('https://i.pinimg.com/originals/70/c1/94/70c194467b446c048562062282075684.jpg');
+    height:110vh;
+    overflow:hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+    .card {
+        width: 291px;
+        background-color: #807bd1;
 
-{% block title %}wish_list{% endblock %}
+        border: 1px solid black;
+        margin: auto;
+    }
+    
+</style>
 
+{% endblock style %}
+{% block title %}
+wishlist
+{% endblock title %}
 {% block body %}
-  <br>
-
 <div class="row">
-    {% for list_object in extend_user_object.home_list.all %}
-        <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6">
-            <div class="card" >
-                {% if list_object.picture %}
-                <img src="{{list_object.picture.url}}" alt="No Image" style="float: left; width:280x; height:280px;background-size:cover;">
-                {% endif %}
-                <h3>City: {{list_object.city}}</h3>
-                <h4>address: {{list_object.address}}</h4>
-                <b><h3>Rent: {{list_object.rent}}</h3></b>
-                <a href="/{{list_object.id}}"><p><button>View</button></p></a>
-            </div>
-            <br>
+
+    {% for homeobject in extend_user_object.home_list.all %}
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 abc">
+        <div class="card" style="text-align: center;">
+            {% if homeobject.picture %}
+            <img src="{{homeobject.picture.url}}" alt="No Image"
+                style=" width:290px; height:280px;background-size:cover;">
+            {% endif %}
+            <h3>City: {{homeobject.city}}</h3>
+            <h4>address: {{homeobject.address}}</h4>
+            <b>
+                <h4>Rent: {{homeobject.rent}}</h4>
+            </b>
+            <a href="/{{homeobject.id}}">
+                <p><button style="width:50%">View</button></p>
+            </a>
         </div>
+        <br>
+    </div>
+
     {% endfor %}
 </div>
-
-{% endblock %}
+{% endblock body %}

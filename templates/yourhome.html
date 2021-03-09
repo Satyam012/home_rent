@@ -1,33 +1,52 @@
 {% extends 'base.html' %}
+{% block style %}
+<style>
+    body {
+    background-image: url('https://perfectagent.com.au/wp-content/uploads/2020/02/What-You-Need-to-Know-About-Buying-an-Investment-Property-in-Denver.jpg');
+    height:100vh;
+    overflow:hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+    .card {
+        width: 291px;
+        background-color: #807bd1;
 
+        border: 1px solid black;
+        margin: auto;
+    }
+</style>
+
+{% endblock style %}
 {% block title %}
-    yourhome
+yourhome
 {% endblock title %}
-{% block head %}
-{% load static %}
-
-    
-{% endblock head %}
 {% block body %}
 <div class="row">
-    {% for homecard in all_object %}
-        <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6">
-            <div class="card" >
-                {% if homecard.picture %}
-                <img src="{{homecard.picture.url}}" alt="No Image" style="float: left; width:280x; height:280px;background-size:cover;">
-                {% endif %}
-                <h3>City: {{homecard.city}}</h3>
-                <h4>address: {{homecard.address}}</h4>
-                <b><h3>Rent: {{homecard.rent}}</h3></b>
-                <button><a href="/{{homecard.id}}/">View</a></button>
-                {% if user is homecart.user %}
-                <button><a href="/delete/{{homecard.id}}/">Delete</a></button>
-                {% endif %}
-            </div>
-            <br>
+
+    {% for homeobject in all_object %}
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 abc">
+        <div class="card" style="text-align: center;">
+            {% if homeobject.picture %}
+            <img src="{{homeobject.picture.url}}" alt="No Image"
+                style=" width:290px; height:280px;background-size:cover;">
+            {% endif %}
+            <h3>City: {{homeobject.city}}</h3>
+            <h4>address: {{homeobject.address}}</h4>
+            <b>
+                <h4>Rent: {{homeobject.rent}}</h4>
+            </b>
+            <a href="/{{homeobject.id}}">
+                <p><button style="width:50%">View</button></p>
+            </a>
+            {% if user is homecart.user %}
+            <button><a href="/delete/{{homecard.id}}/">Delete</a></button>
+            {% endif %}
         </div>
+        <br>
+    </div>
+
     {% endfor %}
 </div>
 {% endblock body %}
-    
-    

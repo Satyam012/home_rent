@@ -4,71 +4,57 @@
 addhome
 {% endblock title %}
 
+{% block style %}
+<style>
+    body {
+    background-image: url('https://bhp.co.uk/app/uploads/2020/06/cXUk-ZB9FohHFwOJJRxRIHK3RRUq4N4exwpXWGvjmJk.jpg');
+    height:100vh;
+    overflow:hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+</style>
+
+{% endblock style %}
+
 {% block body %}
-<form action="/addhome/" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-     City: <input type="text" name="city" placeholder="City Name" required=""><br>
-     address: <input type="text" name="address" placeholder="address" required=""><br>
-     Rent: <input type="number" name="rent" placeholder="Rent"><br>
-     Image: <input type="file" name="image" required><br>
-     Contact Number: <input type="tel" name="phone" placeholder="mobile no."><br>
-     description: <textarea name="description" rows="4" cols="50"></textarea><br>
-     <label for="latitude">Latitude:</label> <input type="text" name="latitude" id="latitude">
-     <label for="longitude">Longitude:</label> <input type="text" name="longitude" id="longitude"><br>
-     <!-- bedroom1: <input type="file" name="bedroom1"><br>
-     bedroom2: <input type="file" name="bedroom2"><br>
-     kitchen: <input type="file" name="kitchen"><br>
-     other: <input type="file" name="other"><br> -->
-     <input type="submit" name="submit">
+
+<form action="/addhome/" method="POST" enctype="multipart/form-data" style="margin: 0px 10px;">
+  {% csrf_token %}
+  
+  <div class="form-group col-md-6">
+    <label>CITY :</label>
+    <input type="text" class="form-control" name="city" required>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>ADDRESS :</label>
+    <input type="text" class="form-control" name="address" required>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>RENT :</label>
+    <input type="text" class="form-control" name="rent" required>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>MOBILE NO :</label>
+    <input type="text" class="form-control" name="phone" required>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>DESCRIPTION :</label>
+    <input type="text" class="form-control" name="description" required>
+  </div>
+    
+  <div class="form-group col-md-6">
+    <label>IMAGE :</label>
+    <input type="file" class="form-control" name="image" required>
+  </div>
+  <br>
+  <button type="submit" name="submit" class="btn btn-primary" style="margin: 2% 40%; width: 200px; height: 50px; font-size: 25px;">Add Home</button>
 </form>
 <br>
-<div id="googleMap" style="width:100%;height:400px;"></div>
-<br>
-<script>
-function myMap() {
-var mapProp= {
-  center:new google.maps.LatLng(21.2514,81.6296),
-  zoom:12,
-};
-var marker;
-
-function placeMarker(location) {
-  if ( marker ) {
-    marker.setPosition(location);
-  } else {
-    marker = new google.maps.Marker({
-      position: location,
-      map: map
-    });
-  }
-}
-
-var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-map.addListener('click', function(e) {
-    placeMarker(e.latLng, map);
-    a = e.latLng;
-    lat =parseFloat(a.lat('get'));
-    long =parseFloat(a.lng('get'));
-    var lat_text_input = document.getElementById('latitude');
-    var long_text_input = document.getElementById('longitude');
-    lat_text_input.value = lat;
-    long_text_input.value = long;
-
-});
-}
-
-/*
-function placeMarker(position, map) {
-    var marker = new google.maps.Marker({
-        position: position,
-        map: map
-    });
-    map.panTo(position);
-}
-*/
-</script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8SoF_iIZGABFQKJOvQwqGZ5bf8_R20H0&callback=myMap"></script>
-{% endblock body %}
-
+{% endblock %}
     
