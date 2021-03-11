@@ -40,13 +40,16 @@ yourhome
             <a href="/{{homeobject.id}}">
                 <p><button style="width:50%">View</button></p>
             </a>
-            {% if user is homecart.user %}
+            
             <button><a href="/delete/{{homecard.id}}/">Delete</a></button>
-            {% endif %}
+            
+            <button><a href="/edit/{{homeobject.id}}/">Edit</a></button>
+            
         </div>
         <br>
     </div>
 
     {% endfor %}
 </div>
+
 {% endblock body %}

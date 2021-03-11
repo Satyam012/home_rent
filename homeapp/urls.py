@@ -22,5 +22,6 @@ urlpatterns = [
     path('reject/<int:card_id>/',views.reject,name="reject"),
     path('allHome/<int:user_id>/',views.allHomes,name="allHomes"),
     path('about/',views.about),
+    path('edit/<int:home_id>/',views.edit),
 ]
 
