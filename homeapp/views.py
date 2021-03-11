@@ -181,4 +181,7 @@ def reject(request,card_id):
     home_card = Item.objects.get(id=card_id)
     home_card.report=0   
     home_card.save()
-    return redirect('/request/')         
+    return redirect('/request/')     
+
+def about(request):
+    return render(request,'about.html')        
