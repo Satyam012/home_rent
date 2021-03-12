@@ -2,13 +2,14 @@
 {% block style %}
 <style>
     body {
-    background-image: url('https://i.pinimg.com/originals/70/c1/94/70c194467b446c048562062282075684.jpg');
-    height:110vh;
-    overflow:hidden;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
+        background-image: url('https://www.fhamortgagesource.com/wp-content/uploads/2016/07/Louisville-5-percent-Jumbo.jpg');
+        height: 110vh;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
     .card {
         width: 291px;
         background-color: #807bd1;
@@ -16,7 +17,6 @@
         border: 1px solid black;
         margin: auto;
     }
-    
 </style>
 
 {% endblock style %}
@@ -24,8 +24,10 @@
 wishlist
 {% endblock title %}
 {% block body %}
-<div class="row">
 
+<div class="row">
+    <h2 style="text-align: center;"><span class="label label-info" style="border-style: solid; color:black">Wish-List</span></h2><br><br> 
+    {% if extend_user_object.home_list.all %}
     {% for homeobject in extend_user_object.home_list.all %}
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 abc">
         <div class="card" style="text-align: center;">
@@ -41,10 +43,15 @@ wishlist
             <a href="/{{homeobject.id}}">
                 <p><button style="width:50%">View</button></p>
             </a>
+            <a href="/removewishlist/{{homeobject.id}}/">
+                <p><button style="width:50%">remove to wishList</button></p>
+            </a>
         </div>
         <br>
     </div>
-
     {% endfor %}
+    {%else%}
+    <h3 style="margin: 5%;">You don't have any list</h3>
+    {%endif%}
 </div>
 {% endblock body %}

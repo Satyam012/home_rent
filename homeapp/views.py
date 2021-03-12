@@ -4,33 +4,10 @@ from django.http import HttpResponse,Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
-# import math
-# from math import cos, sqrt
-# R = 6371000 #radius of the Earth in m
-# from math import radians, cos, sin, asin, sqrt 
-# def distance(lat1, lon1, lat2, lon2):
-#     # The math module contains a function named 
-#     # radians which converts from degrees to radians. 
-#     lon1 = radians(lon1) 
-#     lon2 = radians(lon2) 
-#     lat1 = radians(lat1) 
-#     lat2 = radians(lat2) 
 
-#     # Haversine formula  
-#     dlon = lon2 - lon1  
-#     dlat = lat2 - lat1 
-#     a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
-
-#     c = 2 * asin(sqrt(a))  
-
-#     # Radius of earth in kilometers. Use 3956 for miles 
-#     r = 6371
-
-#     # calculate the result 
-#     return(c * r) 
 @login_required
 def category(request):
-    
+    print('satyam')
     data = Item.objects.all()
     if 'search' in request.POST:
         city = request.POST['city']
@@ -42,6 +19,7 @@ def home(request):
     return render(request,'home.html')
 
 def home1(request):
+    print('satyam')
     return render(request,'home1.html')   
 
 def login(request):#copied frm beat-connect master
@@ -60,12 +38,7 @@ def login(request):#copied frm beat-connect master
     #return render(request, 'login.html')
 def register(request):
     if 'register' in request.POST:
-        # first_name = request.POST['first_name']
-        # last_name = request.POST['last_name']
         username = request.POST['username']
-        # age = request.POST['age']
-        # number =request.POST['phone']
-        image =request.FILES['image']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         if password1 == password2:
@@ -74,7 +47,7 @@ def register(request):
             else:
                 user= User.objects.create_user(username = username, password = password1)
                 user.save()
-                my_extend_user = extendedUser(belongs_to= user,image=image )
+                my_extend_user = extendedUser(belongs_to= user)
                 my_extend_user.save()
                 return redirect('/')
         else:
@@ -86,9 +59,9 @@ def category_home(request,home_id):
     return render(request,'home_card.html',{'home_card':home_card})
 
 def profile_card(request,id):
-    # extend_user_belongs_to = User.objects.get(id = id)
     userr= User.objects.get(id=id)
-    return render(request,'profile.html',{'userr':userr})   
+    profile= extendedUser.objects.get(belongs_to=userr)
+    return render(request,'profile.html',{'obj':profile})   
 
 def addwishlist(request,home_id):#addding to wishlist code
     #return HttpResponse('okkkkkkkkk')
@@ -182,3 +155,15 @@ def edit(request,home_id):
         obj.save()
         return redirect('/yourhome/')
     return render(request,'edithome.html',{'obj':home_card})
+
+def editprofile(request,profile_id):
+    profile = extendedUser.objects.get(id=profile_id)
+    if 'submit' in request.POST:
+        profile.name= request.POST['name']
+        profile.email = request.POST['email']
+        profile.phone = request.POST['phone']
+        profile.image =request.FILES['image']
+        profile.save()
+        ss = profile.belongs_to.id
+        return redirect('/profile/'+str(ss)+'/')  
+    return render(request,'editprofile.html',{'obj':profile})

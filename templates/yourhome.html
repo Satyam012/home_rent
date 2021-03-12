@@ -24,10 +24,10 @@ yourhome
 {% endblock title %}
 {% block body %}
 <div class="row">
-
+    <h2 style="text-align: center;"><span class="label label-info" style="border-style: solid; color:black">Your Homes</span></h2><br><br>
     {% for homeobject in all_object %}
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 abc">
-        <div class="card" style="text-align: center;">
+        <div class="card" style="text-align: center; padding-bottom: 10px;">
             {% if homeobject.picture %}
             <img src="{{homeobject.picture.url}}" alt="No Image"
                 style=" width:290px; height:280px;background-size:cover;">

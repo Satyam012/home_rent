@@ -10,7 +10,7 @@ profile_card
   }
   .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    max-width: 300px;
+    max-width: 400px;
     margin: auto;
     text-align: center;
     font-family: arial;
@@ -48,18 +48,19 @@ profile_card
 {% endblock style %}
 
 {% block body %}
-
+<h2 style="text-align: center;"><span class="label label-info" style="border-style: solid; color:black">Profile</span></h2><br><br>
 
 <div class="card" style="background-image: url('https://t4.ftcdn.net/jpg/03/01/33/73/360_F_301337371_FYInUPUpOTAYqH1eFJ06PXQKukva7dvD.jpg');">
-  <img src="{{userr.extended_reverse.image.url}}" alt="John" style="width:300px; height: 300px;">
-  <h1>{{userr.username}}</h1>
-  <p class="title">CEO & Founder, </p>
+  <img src="{{obj.image.url}}" alt="John" style="width:400px; height: 300px;">
+  <h1>{{obj.name}}</h1>
+  <h2>{{obj.email}}</h2>
+  <p class="title">{{obj.phone_number}}</p>
   <div style="margin: 24px 0;" class="abc">
     <i class="fa fa-dribbble"></i>
     <i class="fa fa-twitter"></i>
     <i class="fa fa-linkedin"></i>
     <i class="fa fa-facebook"></i>
   </div>
-  <p><a href="/allHome/{{userr.id}}"><button>View Property</button></a></p>
+  <p><a href="/editprofile/{{obj.id}}/"><button>Edit Profile</button></a></p>
 </div>
 {% endblock body %}
