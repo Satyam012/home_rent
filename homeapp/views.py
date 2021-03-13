@@ -14,15 +14,18 @@ def category(request):
         data = Item.objects.filter(city__contains = city )
     
     return render(request,'all_categories.html',{'all_category_objects':data})
-
+#signup page
 def home(request):
     return render(request,'home.html')
 
+#login page
 def home1(request):
-    print('satyam')
-    return render(request,'home1.html')   
+    if not request.user.is_authenticated:
+        return render(request,'home1.html')
+    else:
+        return redirect('/home')
 
-def login(request):#copied frm beat-connect master
+def login(request):
     if 'login' in request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -32,10 +35,8 @@ def login(request):#copied frm beat-connect master
             messages.add_message(request, messages.INFO, 'Logged In')
             return redirect('/home/')
         else:
-            messages.add_message(request, messages.INFO, 'Invalid Credential')
-            return redirect('/')
-            #return render(request, 'login.html', {'error_message': "Invalid Credentials"})
-    #return render(request, 'login.html')
+            return render(request, 'home1.html', {'message': "Invalid Credentials*"})
+
 def register(request):
     if 'register' in request.POST:
         username = request.POST['username']
@@ -43,7 +44,7 @@ def register(request):
         password2 = request.POST['password2']
         if password1 == password2:
             if User.objects.filter(username = username).exists():
-                return render(request,'home.html',{'error_message':"Username already taken"})
+                return render(request,'home.html',{'message':"Username already taken*"})
             else:
                 user= User.objects.create_user(username = username, password = password1)
                 user.save()
@@ -51,7 +52,7 @@ def register(request):
                 my_extend_user.save()
                 return redirect('/')
         else:
-            return render(request,'home.html',{'error_message':"Password does not match"})
+            return render(request,'home.html',{'message':"Password does not match"})
     return render(request,'home.html') 
 
 def category_home(request,home_id):
@@ -64,7 +65,6 @@ def profile_card(request,id):
     return render(request,'profile.html',{'obj':profile})   
 
 def addwishlist(request,home_id):#addding to wishlist code
-    #return HttpResponse('okkkkkkkkk')
     home_card = Item.objects.get(id=home_id)
     extend_user_object = extendedUser.objects.get(belongs_to= request.user)
     extend_user_object.home_list.add(home_card)

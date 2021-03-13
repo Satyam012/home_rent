@@ -51,6 +51,7 @@ all_category
       <b>
         <h4>Rent: {{homeobject.rent}}</h4>
       </b>
+      {% if not user.is_staff%}
       {% if homeobject in request.user.extended_reverse.home_list.all %}
       <a href="/removewishlist/{{homeobject.id}}/">
         <p><button style="width:50%">remove to wishList</button></p>
@@ -59,6 +60,7 @@ all_category
       <a href="/addwishlist/{{homeobject.id}}/">
         <p><button style="width:50%">add to wishList</button></p>
       </a>
+      {%endif%}
       {%endif%}
       <a href="/{{homeobject.id}}">
         <p><button style="width:50%">View</button></p>

@@ -12,13 +12,7 @@ profile_card
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 400px;
     margin: auto;
-    text-align: center;
-    font-family: arial;
-  }
-
-  .title {
-    color: grey;
-    font-size: 18px;
+    
   }
 
   button {
@@ -48,14 +42,17 @@ profile_card
 {% endblock style %}
 
 {% block body %}
-<h2 style="text-align: center;"><span class="label label-info" style="border-style: solid; color:black">Profile</span></h2><br><br>
+<h2 style="text-align: center;"><span class="label label-info" style="border-style: solid; color:black">Profile</span></h2><br>
 
-<div class="card" style="background-image: url('https://t4.ftcdn.net/jpg/03/01/33/73/360_F_301337371_FYInUPUpOTAYqH1eFJ06PXQKukva7dvD.jpg');">
-  <img src="{{obj.image.url}}" alt="John" style="width:400px; height: 300px;">
-  <h1>{{obj.name}}</h1>
-  <h2>{{obj.email}}</h2>
-  <p class="title">{{obj.phone_number}}</p>
-  <div style="margin: 24px 0;" class="abc">
+<div class="card " style="background-color: #cce6ff;">
+  <img src="{{obj.image.url}}" alt="John" style="width:400px; height: 300px; ">
+  <div style="margin-left: 10%; font-family:'Times New Roman', Times, serif;">
+    <h3>Name: {{obj.name}}</h3>
+    <h3>Email: {{obj.email}}</h3>
+    <h3>Contact No: {{obj.phone_number}}</h3>
+  </div>
+  
+  <div style="margin: 24px 35%;" class="abc">
     <i class="fa fa-dribbble"></i>
     <i class="fa fa-twitter"></i>
     <i class="fa fa-linkedin"></i>

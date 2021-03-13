@@ -15,8 +15,8 @@ home_card
 {% endblock style %}
 
 {% block body %}
-<div class="col" style="margin: 4% 20%;">
-  <div class="row" style="border-style: solid; padding: 20px 0; background-color: #e5ffcc;">
+<div class="col" style="margin: 2% 20%;">
+  <div class="row" style="border-style: solid; padding: 10px 0 20px 0; background-color: #e5ffcc;">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="margin-top: 40px;">
       <img src="{{home_card.picture.url}}" alt="No Image"style="width:350px; height:350px;">
     </div>
@@ -29,7 +29,7 @@ home_card
         <p style="text-align: right; font-family: 'Times New Roman', Times, serif;"><button type="button" class="btn btn-primary btn-lg">Report</button></p>
       </a>
       {% endif %}
-      <h3><b>Name:</b> <a href="/profile/{{home_card.user.id}}/">{{home_card.user.username}}</a></h3>
+      <h3><b>Name:</b> {{home_card.user.username}}</h3>
       <h3><b>City:</b> {{home_card.city}}</h3>
       <h3><b>address:</b> {{home_card.address}}</h3>
       <h3><b>Rent:</b> {{home_card.rent}}</h3>

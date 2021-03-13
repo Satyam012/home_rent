@@ -37,7 +37,9 @@
                 <a class="navbar-brand" href="/home/" style="color: violet; font-family:cursive"><i><b>HOME-RENT</b></i></a>
             </div>
             <ul class="nav navbar-nav">
+                {% if not user.is_staff%}
                 <li><a href="/wishlist/">Wishlist</a></li>
+                {% endif %}
                 <li><a href="/yourhome/">Your Home</a></li>
                 <li><a href="/addhome/">Add Home</a></li>
                 {% if user.is_staff %}
@@ -46,7 +48,14 @@
                 <li><a href="/about/">About Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                {% if user.is_staff %}
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" style="color: aquamarine; font-family:cursive;"><i><b>Hello, Admin...</b></i></a>
+                </div>
+                {% else %}
                 <li><a href="/profile/{{user.id}}/"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                {% endif %}
+                
                 <li><a href="/logout/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
         </div>
