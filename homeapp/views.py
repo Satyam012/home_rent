@@ -161,7 +161,7 @@ def editprofile(request,profile_id):
     if 'submit' in request.POST:
         profile.name= request.POST['name']
         profile.email = request.POST['email']
-        profile.phone = request.POST['phone']
+        profile.phone_number = request.POST['phone']
         profile.image =request.FILES['image']
         profile.save()
         ss = profile.belongs_to.id
