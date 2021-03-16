@@ -5,7 +5,7 @@ to search for houses within a particular area, and source information about all 
 Requirements-
 ->Django>= 2.2, Python>= 3.3
 
-Demo project- http://satyamjai.pythonanywhere.com/
+Demo project- http://satyam68.pythonanywhere.com/
 
 # WebSite-
 
