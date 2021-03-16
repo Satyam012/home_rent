@@ -8,35 +8,32 @@ Requirements-
 Demo project- http://satyamjai.pythonanywhere.com/
 
 # WebSite-
-![](screenshots/1.png)
 
-![](screenshots/5.png)
+<img src="screenshots/1.png" height="500" width="900"><br><br>
+<img src="screenshots/5.png" height="500" width="900">
 
 
 # Features-
 
 Authentication-
 
-![](screenshots/7.png)
-
-![](screenshots/8.png)
+<img src="screenshots/7.png" height="500" width="400">      <img src="screenshots/8.png" height="500" width="400">
 
 Search house in perticular Area-
 
-![](screenshots/2.png)
+<img src="screenshots/2.png" height="500" width="900">
 
 
 Wish List-
 
-![](screenshots/3.png)
+<img src="screenshots/3.png" height="500" width="900">
 
 
 Add home-
 
-![](screenshots/4.png)
-
+<img src="screenshots/4.png" height="500" width="900">
 
 Profile
 
-![](screenshots/6.png)
+<img src="screenshots/6.png" height="400" width="400">
 
