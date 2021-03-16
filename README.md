@@ -15,25 +15,25 @@ Demo project- http://satyamjai.pythonanywhere.com/
 
 # Features-
 
-Authentication-
+<h2>Authentication-</h2>
 
 <img src="screenshots/7.png" height="500" width="400">      <img src="screenshots/8.png" height="500" width="400">
 
-Search house in perticular Area-
+<h2>Search house in perticular Area-</h2>
 
 <img src="screenshots/2.png" height="500" width="900">
 
 
-Wish List-
+<h2>Wish List-</h2>
 
 <img src="screenshots/3.png" height="500" width="900">
 
 
-Add home-
+<h2>Add home-</h2>
 
 <img src="screenshots/4.png" height="500" width="900">
 
-Profile
+<h2>Profile</h2>
 
 <img src="screenshots/6.png" height="400" width="400">
 
