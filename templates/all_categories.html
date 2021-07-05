@@ -2,20 +2,55 @@
 {% block style %}
 <style>
   body {
-    background-image: url('https://t4.ftcdn.net/jpg/03/01/33/73/360_F_301337371_FYInUPUpOTAYqH1eFJ06PXQKukva7dvD.jpg');
-  }
-
-  .row {
-    background-image: url('https://t4.ftcdn.net/jpg/03/01/33/73/360_F_301337371_FYInUPUpOTAYqH1eFJ06PXQKukva7dvD.jpg');
+    background-image: url('/static/homepage.jpg'); 
   }
 
   .card {
     width: 281px;
     background-color: #f0e4d7;
-
     border: 1px solid black;
     margin: auto;
   }
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+  margin-left: 15%;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #00B4CC;
+  border-right: none;
+  padding: 15px;
+  font-size: 20px;
+  height: 45px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 45px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.wrap{
+  width: 80%;
+  left: 50%; 
+} 
 </style>
 
 {% endblock style %}
@@ -25,29 +60,29 @@ all_category
 
 {% block body %}
 
-<br>
-<div style="background-color:rgb(7, 7, 7); ">
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <form class="form-inline" action="{% url 'home_app:category' %}" method="POST">
-      {% csrf_token %}
-      <input class="form-control mr-sm-2" type="text" name="city" placeholder="City Name..."
-        style="width: 50%;margin-left:25%;">
-      <button name="search" type="submit" style="width: 50%; margin-left:25%;">SORT HOUSES BY LOCATION</button>
-    </form>
-  </nav>
+<div class="wrap">
+  <div class="search">
+     <input type="text" class="searchTerm" placeholder="Search for City, Address..." id="myinput" onkeyup="searchfn()">
+     <button class="searchButton">
+       <i class="fa fa-search"></i>
+    </button>
+  </div>
 </div>
 
+
+
+<br>
 {%if all_category_objects%}
 
 <div class="row">
   {% for homeobject in all_category_objects %}
-  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-    <div class="card" style="text-align: center;">
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 card_object">
+    <div class="card " style="text-align: center;">
       {% if homeobject.picture %}
       <img src="{{homeobject.picture.url}}" alt="No Image" style=" width:280px; height:260px;background-size:cover;">
       {% endif %}
-      <h3>City: {{homeobject.city}}</h3>
-      <h4>address: {{homeobject.address}}</h4>
+      <h3 class="city_name">{{homeobject.city}}</h3>
+      <h4 class="card_address">{{homeobject.address}}</h4>
       <b>
         <h4>Rent: {{homeobject.rent}}</h4>
       </b>
@@ -73,7 +108,30 @@ all_category
 
 </div>
 {%else%}
-<h3>You don't have any album</h3>
+<h2 style="text-align: center;"><span class="label label-default">No Result Found...</span></h2><br><br>
 {%endif%}
 
+<script type="text/javascript">
+  function searchfn() {
+
+    let filter = document.getElementById('myinput').value.toUpperCase();
+    console.log(filter);
+    var val1 = document.getElementsByClassName("card_object");
+    var val2 = document.getElementsByClassName("city_name");
+    var val3 = document.getElementsByClassName("card_address");
+    
+
+    for (var i = 0; i < val2.length; i++) {
+      let cityvalue = val2[i].textContent || val2[i].innerHTML;
+      let addressvalue = val3[i].textContent || val3[i].innerHTML;
+
+      if (cityvalue.toUpperCase().indexOf(filter) > -1 || addressvalue.toUpperCase().indexOf(filter) > -1) {
+        val1[i].style.display = "";
+      }
+      else {
+        val1[i].style.display = "none";
+      }
+    }
+  }
+</script>
 {% endblock body %}

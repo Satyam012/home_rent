@@ -2,10 +2,8 @@
 {% block style %}
 <style>
     body {
-        background-image: url('https://www.fhamortgagesource.com/wp-content/uploads/2016/07/Louisville-5-percent-Jumbo.jpg');
-        height: 110vh;
-        overflow: hidden;
-        background-repeat: no-repeat;
+        background: url("/static/wishlist.jpg");
+        height: 100vh;
         background-position: center;
         background-size: cover;
     }
@@ -13,7 +11,6 @@
     .card {
         width: 291px;
         background-color: #807bd1;
-
         border: 1px solid black;
         margin: auto;
     }
@@ -21,7 +18,7 @@
 
 {% endblock style %}
 {% block title %}
-wishlist
+Reported-House
 {% endblock title %}
 {% block body %}
 
@@ -40,10 +37,8 @@ wishlist
             <b>
                 <h4>Rent: {{homeobject.rent}}</h4>
             </b>
-            <a href="/accept/{{homeobject.id}}/"><p><button style="width: 50%;">Accept</button></p></a>
-            <a href="/reject/{{homeobject.id}}/"><p><button style="width: 50%;">Reject</button></p></a>
-           
-            <a href="/{{homeobject.id}}"><p><button style="width: 50%;">View</button></p></a>
+            <a href="/reject/{{homeobject.id}}/"><p><button style="width: 80%;">Reject</button></p></a>
+            <a href="/{{homeobject.id}}"><p><button style="width: 80%;">View</button></p></a>
 
         </div>
         <br>

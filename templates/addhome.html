@@ -6,9 +6,9 @@ addhome
 
 {% block style %}
 <style>
-    body {
-    background-image: url('https://bhp.co.uk/app/uploads/2020/06/cXUk-ZB9FohHFwOJJRxRIHK3RRUq4N4exwpXWGvjmJk.jpg');
-    height:100vh;
+  body {
+    background-image: url('/static/addhome.jpg');
+    height: 100vh;
     background-position: center;
     background-size: cover;
   }
@@ -18,9 +18,9 @@ addhome
 
 {% block body %}
 
-<form action="/addhome/" method="POST" enctype="multipart/form-data" style="margin: 0px 10%;">
+<form action="/addhome/" method="POST" enctype="multipart/form-data" style="margin: 0px 20%;">
   {% csrf_token %}
-  
+  <br><br>
   <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <label>CITY :</label>
     <input type="text" class="form-control" name="city" required>
@@ -45,14 +45,23 @@ addhome
     <label>DESCRIPTION :</label>
     <input type="text" class="form-control" name="description" required>
   </div>
-    
-  <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+  <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
     <label>IMAGE :</label>
     <input type="file" class="form-control" name="image" required multiple>
   </div>
-  <br>
-  <button type="submit" name="submit" class="btn btn-primary" style="margin: 2% 40%; width: 200px; height: 50px; font-size: 25px;">Add Home</button>
+
+  <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <label>Status :</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="availability">
+      <option selected>------------Select-----------</option>
+      <option>Available</option>
+      <option>Unavailable</option>
+    </select>
+  </div>
+
+  <button type="submit" name="submit" class="btn btn-primary"
+    style="margin: 2% 40%; width: 200px; height: 50px; font-size: 25px;">Add Home</button>
 </form>
 <br>
 {% endblock %}
-    

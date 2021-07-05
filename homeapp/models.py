@@ -12,19 +12,21 @@ class Item(models.Model):
     number=models.IntegerField(null=True)
     picture = models.FileField(blank=True, null=True)
     report =models.IntegerField(default=0)
+    status =models.CharField(max_length=50,default="Safe") 
+    availability = models.CharField(max_length=200, default="Available")  
     def __str__(self):
-        return "Owner"+ self.user.username+ "-Location:"+ self.address + "-" + self.city
+        return "Location:"+ self.address + "-" + self.city
     
     
 class extendedUser(models.Model):
     name= models.CharField(null=True,max_length=50,default= "...")
     image = models.FileField(null= True, default='user.png')
     email = models.CharField(null=True,default="...",max_length=50)
-    phone_number = models.CharField(null= True,default="...",max_length=13)
+    phone_number=models.CharField(null=True,max_length=12)
     belongs_to = models.OneToOneField(User,related_name="extended_reverse",on_delete=models.CASCADE)
     home_list = models.ManyToManyField(Item,related_name="fav_home")
     def __str__(self):
-        return  self.belongs_to.username +"'s wishList home"
+        return  self.belongs_to.username +"'s Profile"
 
           
 

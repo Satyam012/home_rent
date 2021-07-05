@@ -2,8 +2,8 @@
 {% block style %}
 <style>
     body {
-    background-image: url('https://perfectagent.com.au/wp-content/uploads/2020/02/What-You-Need-to-Know-About-Buying-an-Investment-Property-in-Denver.jpg');
-    height:100vh;
+    background: url("/static/yourhome.jpg");
+    height:110vh;
     background-position: center;
     background-size: cover;
   }
@@ -23,6 +23,7 @@ yourhome
 {% block body %}
 <div class="row">
     <h2 style="text-align: center;"><span class="label label-info" style="border-style: solid; color:black">Your Homes</span></h2><br><br>
+    {% if all_object %}
     {% for homeobject in all_object %}
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 abc">
         <div class="card" style="text-align: center; padding-bottom: 10px;">
@@ -39,15 +40,19 @@ yourhome
                 <p><button style="width:50%">View</button></p>
             </a>
             
-            <button><a href="/delete/{{homecard.id}}/">Delete</a></button>
+            <button><a href="/delete/{{homeobject.id}}">Delete</a></button>
             
-            <button><a href="/edit/{{homeobject.id}}/">Edit</a></button>
+            <button><a href="/edit/{{homeobject.id}}">Edit</a></button>
             
         </div>
         <br>
     </div>
 
     {% endfor %}
+    {%else%}
+    <h2 style="text-align: center;"><span class="label label-default">Your Home List Is Empty</span></h2><br><br>
+    
+    {%endif%}
 </div>
 
 {% endblock body %}

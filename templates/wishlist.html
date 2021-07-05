@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block style %}
 <style>
+
     body {
-        background-image: url('https://www.fhamortgagesource.com/wp-content/uploads/2016/07/Louisville-5-percent-Jumbo.jpg');
-        height: 110vh;
+        background: url("/static/wishlist.jpg");
+        height: 100vh;
         background-position: center;
         background-size: cover;
     }
@@ -49,7 +50,7 @@ wishlist
     </div>
     {% endfor %}
     {%else%}
-    <h3 style="margin: 5%;">You don't have any list</h3>
+    <h2 style="text-align: center;"><span class="label label-default">Your Wish-List Is Empty</span></h2><br><br>
     {%endif%}
 </div>
 {% endblock body %}

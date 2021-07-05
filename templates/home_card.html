@@ -5,10 +5,11 @@ home_card
 {% load static %}
 {% block style %}
 <style>
-  body{
+  body {
     background-image: url('https://www.solidbackgrounds.com/images/1920x1080/1920x1080-light-cyan-solid-color-background.jpg');
   }
-  .abc{
+
+  .abc {
     font-family: 'Times New Roman', Times, serif;
   }
 </style>
@@ -18,17 +19,46 @@ home_card
 <div class="col" style="margin: 2% 20%;">
   <div class="row" style="border-style: solid; padding: 10px 0 20px 0; background-color: #e5ffcc;">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="margin-top: 40px;">
-      <img src="{{home_card.picture.url}}" alt="No Image"style="width:350px; height:350px;">
+      <img src="{{home_card.picture.url}}" alt="No Image" style="width:350px; height:350px;">
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 abc">
+
+
+      <!-- <a href="/block/{{home_card.id}}"><button type="button" class="btn btn-danger btn-lg">Block</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/accept/{{home_card.id}}/"><button type="button" class="btn btn-primary btn-lg ">Do Alert</button></a> -->
+
       
-      {% if home_card.report == 2 %}
-      <h2 style="text-align: right;"><span class="label label-danger" style=" border-style: solid; color:black">Not Safe</span></h2>
-      {% else %}
+      <!-- -------------------------------For User---------------------------------------- -->
+      {% if user.is_staff == False %}
+
+      {% if home_card.availability == "Available" %}
+      <h2><span class="label label-success" style=" border-style: solid; color:black; display: inline; float: left;">Available</span></h2>
+      {% endif %}
+
+      {% if home_card.availability == "Unavailable" %}
+      <h2><span class="label label-warning" style=" border-style: solid; color:black; display: inline; float: left;">Unavailable</span></h2>
+      {%endif%}
+      
+      {% if home_card.status == "NOT SAFE" %}
+      <h2><span class="label label-danger" style=" border-style: solid; color:black; margin-left: 10px; display: inline; float: center;">Not Safe</span></h2>
+      {% endif %}
+
       <a href="/report/{{home_card.id}}/">
-        <p style="text-align: right; font-family: 'Times New Roman', Times, serif;"><button type="button" class="btn btn-primary btn-lg">Report</button></p>
+        <p style="text-align: right; font-family: 'Times New Roman', Times, serif;"><button type="button"
+            class="btn btn-primary btn-lg"  onclick="alert('reported')" id="myBtn">Report</button></p>
       </a>
       {% endif %}
+
+
+      <!-- -------------------------------For staff---------------------------------------- -->
+      {% if user.is_staff %}
+      
+        <h2><b>Total Report: {{home_card.report}}</b></h2>
+        <a href="/block/{{home_card.id}}"><button type="button" class="btn btn-danger btn-lg">Block</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/accept/{{home_card.id}}/"><button type="button" class="btn btn-primary btn-lg ">Do Alert</button></a>
+  
+      {%endif%}
+      <!-- ----------------------------------------------------------------------- -->
       <h3><b>Name:</b> {{home_card.user.username}}</h3>
       <h3><b>City:</b> {{home_card.city}}</h3>
       <h3><b>address:</b> {{home_card.address}}</h3>
@@ -36,7 +66,7 @@ home_card
       <h3><b>Contact Number:</b> {{home_card.number}}</h3>
       <h3><b>description:</b> {{home_card.description}}</h3>
     </div>
-    
+
   </div>
   <br><br>
   <div class="fb-comments"
@@ -44,8 +74,5 @@ home_card
     data-numposts="5" data-width=""></div>
 
 </div>
-
-
-
 
 {% endblock body %}
