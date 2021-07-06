@@ -1,53 +1,18 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<title>SignUp Form</title>
-	{% load static %}
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script
-		type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-
-	<link rel="stylesheet" href="{% static 'home.css' %}">
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-	<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
-</head>
-
-<body>
-
-	<div class="main-w3layouts wrapper">
-
-		<div class="main-agileinfo">
-			<div class="agileits-top">
-				<form action="/register/" method="POST" enctype="multipart/form-data">
-					{% csrf_token %}
-					<input class="text" type="text" name="username" placeholder="Username" required><br>
-					<input class="text" type="password" name="password1" placeholder="Password" required>
-					<input class="text w3lpass" type="password" name="password2" placeholder="Confirm Password" required>
-					<input class="text" type="text" name="number" maxlength="10" placeholder="Mobile Number" required>
-					{% if message %}
-					<h style="color: red;">{{message}}</h>
-					{% endif %}
-					<input type="submit" value="SIGNUP" name="register">
-				</form>
-				<p> <a href="/"> Login Now!</a></p>
-			</div>
-		</div>
-
-		<ul class="colorlib-bubbles">
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
-	</div>
-</body>
-
-</html>
+{% extends 'loginbase.html' %}
+{% block title %}
+SignUp Form
+{% endblock title %}
+{% block form %}
+	<form action="/register/" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<input class="text" type="text" name="username" placeholder="Username" required><br>
+		<input class="text" type="password" name="password1" placeholder="Password" required>
+		<input class="text w3lpass" type="password" name="password2" placeholder="Confirm Password" required>
+		<input class="text" type="email" name="email" placeholder="Email" required>
+		{% if message %}
+		<h style="color: red;">{{message}}</h>
+		{% endif %}
+		<input type="submit" value="SIGNUP" name="register">
+	</form>
+	<p> <a href="/"> Login Now!</a></p>
+{% endblock form %}

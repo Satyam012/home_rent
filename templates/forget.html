@@ -1,0 +1,15 @@
+{% extends 'loginbase.html' %}
+{% block title %}
+forget_password
+{% endblock title %}
+{% block form %}
+    <form action="/forget/" method="post">
+		{% csrf_token %}
+		<input class="text" type="text" name="username" placeholder="Enter Your Username . . ." required="">
+
+		{% if message %}
+		<h style="color: red;">{{message}}</h>
+		{% endif %}
+		<input type="submit" value="SEND OTP" name="submit">
+	</form>
+{% endblock form %}

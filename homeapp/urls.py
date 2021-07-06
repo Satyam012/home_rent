@@ -26,5 +26,7 @@ urlpatterns = [
     path('edit/<int:home_id>/',views.edit),
     path('editprofile/<int:profile_id>/',views.editprofile),
     path('otp/',views.otp_submit),
+    path('forget/',views.forget),
+    path('set_password/',views.set_password),
 ]
 

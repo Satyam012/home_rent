@@ -44,9 +44,11 @@
                 {% endif %}
                 <li><a href="/yourhome/">Your Home</a></li>
                 <li><a href="/addhome/">Add Home</a></li>
+
                 {% if user.is_staff %}
                 <li><a href="/request/"> Request</a></li>
                 {% endif %}
+                
                 <li><a href="/about/">About Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

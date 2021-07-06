@@ -40,7 +40,7 @@ home_card
       {%endif%}
       
       {% if home_card.status == "NOT SAFE" %}
-      <h2><span class="label label-danger" style=" border-style: solid; color:black; margin-left: 10px; display: inline; float: center;">Not Safe</span></h2>
+      <h5><span class="label label-danger" style=" border-style: solid; color:black; margin-left: 10px; display: inline; float: center;">Not Safe</span></h5>
       {% endif %}
 
       <a href="/report/{{home_card.id}}/">

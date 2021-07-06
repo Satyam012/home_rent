@@ -10,6 +10,7 @@ class Item(models.Model):
     rent= models.IntegerField(null = True)
     description= models.CharField(max_length=500) 
     number=models.IntegerField(null=True)
+    
     picture = models.FileField(blank=True, null=True)
     report =models.IntegerField(default=0)
     status =models.CharField(max_length=50,default="Safe") 

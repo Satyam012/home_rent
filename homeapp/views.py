@@ -7,30 +7,59 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth import authenticate, login
-from twilio.rest import Client
 import random
-import os
+from django.core.mail import send_mail
+#-----------------------------forget password------------------------------
+def mail(username,email,otp):  
+    subject = "verification for home_Rent website"  
+    msg     = "Hi "+username+',\n\nwe have received your sign-up request\n <#>Your Home-rent\'s login OTP is '+otp
+    to      = email
+    res     = send_mail(subject, msg, settings.EMAIL_HOST_USER, [to])  
+
+def set_password(request):
+    if 'submit' in request.POST:
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if password1 == password2:
+                user = User.objects.get(username=request.session['username'])
+                user.set_password(password1)
+
+                user.save()
+                return redirect('/')
+        else:
+            return render(request,'set_password.html',{'message':"Password does not match"})
+
+    return render(request,'set_password.html')
+
+def forget(request):
+    if 'submit' in request.POST:
+        username = request.POST['username']
+        if User.objects.filter(username = username).exists():
+            user = User.objects.get(username=username)
+            profile= extendedUser.objects.get(belongs_to=user)
+            email=profile.email
+            otp=str(random.randint(1000,9999))
+            mail(username,email,otp)
+            request.session['otp'] = otp
+            request.session['username'] = username
+            return render(request, 'otp.html', {'reset':'reset'})
+        else:
+            return render(request, 'forget.html', {'message': "Invalid Username*"})
+        
+        
+    return render(request,'forget.html')
+
+
 #-------------------------------signup page---------------------------------------------
 
-def send_otp(mobile , otp):
-    account_sid = 'ACd134f45bf7a770f3aff3878c1139a203'
-    auth_token = '22bf7f3c131829353eed74444c1760f5'
-    client = Client(account_sid, auth_token)
-
-    message = client.messages.create(
-                                body='Your otp is '+otp,
-                                from_='+19568152035',
-                                to='+91'+mobile
-                            )
 
 
 def register(request):
-    otp="1"
     if 'register' in request.POST:
         username = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-        number = request.POST['number']
+        email = request.POST['email']
         if password1 == password2:
             if User.objects.filter(username = username).exists():
                 return render(request,'signup.html',{'message':"Username already taken*"})
@@ -38,33 +67,37 @@ def register(request):
                 otp=str(random.randint(1000,9999))
                 request.session['username'] = username
                 request.session['password'] = password1
-                request.session['phone_number'] = number
+                request.session['email'] = email
                 request.session['otp'] = otp
-                send_otp(number,otp)
-                return render(request,'otp.html') 
+                mail(username,email,otp)
+                return render(request, 'otp.html', {'register':'register'})
         else:
             return render(request,'signup.html',{'message':"Password does not match"})
 
     return render(request,'signup.html')         
 
 def otp_submit(request):
-    print('enter')
-    if 'otp_submit' in request.POST:
-        print('satyam')
+
+    if 'otp_reset' in request.POST:        #for password reset
         otp=request.POST['otp_number']   
 
         if otp==request.session['otp']:
-            print('done')
+            return redirect('/set_password')
+        else:
+            return render(request,'otp.html',{'message':"wrong otp"}) 
+        
+
+    if 'otp_submit' in request.POST:    #for create new account
+        otp=request.POST['otp_number']   
+
+        if otp==request.session['otp']:
             user= User.objects.create_user(username = request.session['username'], password = request.session['password'])
             user.save()
-            my_extend_user = extendedUser(belongs_to= user,phone_number=request.session['phone_number'],name=request.session['username'])
+            my_extend_user = extendedUser(belongs_to= user,email=request.session['email'],name=request.session['username'])
             my_extend_user.save()
             return redirect('/')
         else:
-            print('not done')
             return render(request,'otp.html',{'message':"wrong otp"}) 
-        return render(request,'otp.html') 
-
     return render(request,'otp.html') 
 
 # -------------------------------login page---------------------------------------------
@@ -204,12 +237,6 @@ def editprofile(request,profile_id):
 
 @login_required  
 def report(request,card_id):
-    # home_card = Item.objects.get(id=card_id)
-    # extend_user_object = extendedUser.objects.get(belongs_to= request.user)
-    # home_card.report.add(extend_user_object)
-    # cnt=home_card.objects.count()
-    # print(cnt)
-
     home_card = Item.objects.get(id=card_id)
     home_card.report=1+abs(home_card.report)   
     status=home_card.status
