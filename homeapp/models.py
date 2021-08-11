@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import User
+from django.db.models.fields import BooleanField
 
 class Item(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="item", null=True)
@@ -10,7 +11,8 @@ class Item(models.Model):
     rent= models.IntegerField(null = True)
     description= models.CharField(max_length=500) 
     number=models.IntegerField(null=True)
-    
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
     picture = models.FileField(blank=True, null=True)
     report =models.IntegerField(default=0)
     status =models.CharField(max_length=50,default="Safe") 
@@ -21,6 +23,8 @@ class Item(models.Model):
     
 class extendedUser(models.Model):
     name= models.CharField(null=True,max_length=50,default= "...")
+    is_verified = models.BooleanField(default=False)
+    otp_key = models.CharField(max_length=20,null=True)
     image = models.FileField(null= True, default='user.png')
     email = models.CharField(null=True,default="...",max_length=50)
     phone_number=models.CharField(null=True,max_length=12)

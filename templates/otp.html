@@ -5,7 +5,8 @@ otp
 {% block form %}
 	<form action="/otp/" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
-		<input class="text" type="text" name="otp_number" placeholder="Enter OTP send to your number..." required><br>
+		<input type="hidden"  name="otp_user_id" value="{{otp_user_id}}" />
+		<input class="text" type="text" name="otp_number" placeholder="Enter OTP send to your number..." ><br>
 		{% if message %}
 		<h style="color: red;">{{message}}</h>
 		{% endif %}
@@ -13,11 +14,25 @@ otp
 		{% if reset %}
 		<input type="submit" value="SUBMIT" name="otp_reset">
 		{% else %}
-		<input type="submit" value="SUBMIT" name="otp_submit">
+		<div class="row">
+			<div class="col-md-5 otp_val" >
+				<input type="submit" value="SUBMIT" name="otp_submit">
+			</div>
+			<div class="col-md-5 otp_val" >
+				<input type="submit" value="RESEND OTP" name="resend_otp">
+			</div>
+		</div>
+		<br/>
 		{% endif %}
 	
 	</form>
 	{% if register %}
 	<p> <a href="/"> Login Now!</a></p>
 	{% endif %}
+	<style>
+		.otp_val{
+			padding: 5px;
+			margin: -37px;
+		}
+	</style>
 {% endblock form %}
