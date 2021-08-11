@@ -126,7 +126,7 @@ def otp_submit(request):
             token_generated_date = datetime.datetime.fromisoformat(time_string)
             curr_time = datetime.datetime.utcnow()
             print(curr_time,token_generated_date)
-            diff = curr_time - token_generated_date 
+            diff = curr_time - token_generated_date #diff is a time delta object not datetime object
             if diff.seconds > 300:
                 print(token_generated_date,'gen time')
                 print(curr_time,'curr time')
@@ -146,7 +146,9 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username = username, password = password)
-        if user != None:
+        if user != None :
+            if user.extended_reverse.is_verified is False:
+                return render(request, 'login.html', {'message': "User not verified"})
             auth.login(request,user)
             messages.add_message(request, messages.INFO, 'Logged In')
             return redirect('/home/')
