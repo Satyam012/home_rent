@@ -28,5 +28,6 @@ urlpatterns = [
     path('otp/',views.otp_submit),
     path('forget/',views.forget),
     path('set_password/',views.set_password),
+    path('filter_home/<str:home_name>/',views.FilterHome,name='filer_home'),
 ]
 

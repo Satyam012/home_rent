@@ -62,7 +62,7 @@ all_category
 
 <div class="wrap">
   <div class="search">
-     <input type="text" class="searchTerm" placeholder="Search for City, Address..." id="myinput" onkeyup="searchfn()">
+     <input type="text" class="searchTerm" placeholder="Search for City, Address..." id="myinput" onkeyup="FilterHome(event)">
      <button class="searchButton">
        <i class="fa fa-search"></i>
     </button>
@@ -74,7 +74,7 @@ all_category
 <br>
 {%if all_category_objects%}
 
-<div class="row">
+<div class="row" id="display_search_home">
   {% for homeobject in all_category_objects %}
   <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 card_object">
     <div class="card " style="text-align: center;">
@@ -112,6 +112,64 @@ all_category
 {%endif%}
 
 <script type="text/javascript">
+  function FilterHome(event){
+    //alert(event.target.value)
+    url = `/filter_home/${event.target.value.length > 0 ? event.target.value : "null_value"}/`
+    fetch(url,{method:"GET"}).then(
+    (response) =>{
+      return response.json()
+    }
+    ).then(
+      (data) =>{
+        var data_div = document.getElementById('display_search_home')
+        data_div.innerHTML = ``
+        var data_array = data.data
+        for(var i = 0; i < data_array.length; i++){
+          if (data_array[i].is_staff === false)
+          {
+            if ( data_array[i].in_user_wishlist === true){
+              var button_card = ` 
+                <a href="/removewishlist/${data_array[i].home_id}/">
+                  <p><button style="width:50%">remove to wishList</button></p>
+                </a>
+              `
+            }
+            else{
+                var button_card = `
+                <a href="/addwishlist/${data_array[i].home_id}/">
+                  <p><button style="width:50%">add to wishList</button></p>
+                </a>
+                `
+            }
+          }
+          else{
+            var button_card = `<div> </div>`
+          }
+            html_data_card = ` 
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 card_object">
+                <div class="card " style="text-align: center;">
+                <img src="${data_array[i].home_image}" alt="No Image" style=" width:280px; height:260px;background-size:cover;">
+                <h3 class="city_name">${data_array[i].city}</h3>
+                <h4 class="card_address">${data_array[i].address}</h4>
+                <b>
+                  <h4>Rent: ${data_array[i].rent}</h4>
+                </b>
+                ${button_card}
+                <a href="/${data_array[i].home_id}">
+                  <p><button style="width:50%">View</button></p>
+                </a>
+                </div>
+                <br/>
+            </div>
+          
+            `
+          data_div.innerHTML += html_data_card
+        }
+      }
+    )
+  }
+  
+  
   function searchfn() {
 
     let filter = document.getElementById('myinput').value.toUpperCase();

@@ -10,13 +10,14 @@ from django.contrib.auth import authenticate, login
 import random
 from django.core.mail import send_mail
 import datetime
+from django.utils.timezone import utc
+import json
+
 #-----------------------------forget password------------------------------
 
 def generate_otp_key():
-    a_list = [chr(random.randrange(97,123)) for i in range(10)]
-    a = "".join(a_list)
-    my_date_string = datetime.datetime.utcnow().isoformat()
-    final_key = a + "__" + my_date_string
+    a_list = [str(random.randint(0,9)) for i in range(6)]
+    final_key = "".join(a_list)
     return final_key
 def mail(username,email,otp):  
     subject = "verification for home_Rent website"  
@@ -79,7 +80,7 @@ def register(request):
                 print(otp)
                 user= User.objects.create_user(username = username, password = password1)
                 user.save()
-                my_extend_user = extendedUser(belongs_to= user,email=email,name=username,is_verified = False,otp_key= otp)
+                my_extend_user = extendedUser(belongs_to= user,email=email,name=username,is_verified = False,otp_key= otp, otp_created_time = datetime.datetime.utcnow())
                 my_extend_user.save()
                 mail(username,email,otp)
                 return render(request, 'otp.html', {'register':'register','otp_user_id':user.id})
@@ -90,24 +91,30 @@ def register(request):
 
 def otp_submit(request):
     if 'resend_otp' in request.POST:
-        print("otp being resent block")
         otp_user_id = request.POST['otp_user_id']
+        curr_user = User.objects.get(id= otp_user_id)
+        otp_extend_user = curr_user.extended_reverse
+        token_generated_date = otp_extend_user.otp_created_time
+        curr_time = datetime.datetime.utcnow().replace(tzinfo=utc)
+        diff = curr_time - token_generated_date #diff is a time delta object not datetime object
+        print(diff.seconds,'diff resend debug')
+        if diff.seconds < 30:
+            return render(request,'otp.html',{'message':"Please Wait 30 seconds",'otp_user_id':otp_user_id}) 
         while True:
             new_otp_number = generate_otp_key()
             if extendedUser.objects.filter(otp_key= new_otp_number).exists() is False:
-                print(otp_user_id,'otp user id')
                 otp_user = User.objects.get(id = int(otp_user_id))
                 otp_extend_user = otp_user.extended_reverse
                 otp_extend_user.otp_key = new_otp_number
+                otp_extend_user.otp_created_time = datetime.datetime.utcnow()
+                otp_extend_user.otp_used_count = 0
                 otp_extend_user.save()
-                print((otp_extend_user.belongs_to.username,otp_extend_user.belongs_to.email,new_otp_number),'before mail')
                 mail(otp_extend_user.belongs_to.username,otp_extend_user.email,new_otp_number)
                 break
         return render(request,'otp.html',{'message':"OTP Key sent to mail",'otp_user_id':otp_user_id}) 
 
     if 'otp_reset' in request.POST:        #for password reset
         otp=request.POST['otp_number']   
-
         if otp==request.session['otp']:
             return redirect('/set_password')
         else:
@@ -121,21 +128,20 @@ def otp_submit(request):
         otp_extend_user = otp_user.extended_reverse
         server_stored_otp_key =  otp_extend_user.otp_key
         if otp_number== server_stored_otp_key:
-            time_string = otp_number.split("__")[1]
-            #print(time_string,'debug')
-            token_generated_date = datetime.datetime.fromisoformat(time_string)
-            curr_time = datetime.datetime.utcnow()
-            print(curr_time,token_generated_date)
+            token_generated_date = otp_extend_user.otp_created_time
+            curr_time = datetime.datetime.utcnow().replace(tzinfo=utc)
             diff = curr_time - token_generated_date #diff is a time delta object not datetime object
-            if diff.seconds > 300:
-                print(token_generated_date,'gen time')
-                print(curr_time,'curr time')
-                print(diff.seconds)
+            print(diff.seconds,'diff submit debug')
+            if diff.seconds > 300 :
                 return render(request,'otp.html',{'message':"OTP Token older than 5 minutes",'otp_user_id':otp_user_id}) 
+            elif otp_extend_user.otp_used_count > 10:
+                return render(request,'otp.html',{'message':"Multiple wrong OTP entries. Please regenerate OTP",'otp_user_id':otp_user_id}) 
             otp_extend_user.is_verified = True
             otp_extend_user.save()
             return redirect('/')
         else:
+            otp_extend_user.otp_used_count += 1
+            otp_extend_user.save()
             return render(request,'otp.html',{'message':"wrong otp",'otp_user_id':otp_user_id}) 
     return render(request,'otp.html') 
 
@@ -359,6 +365,31 @@ def block(request,card_id):
     else:
         raise Http404("You are not an admin")     
 
+#------------------------------Filter HOme Api---------------------------------------------
+#@login_required
+def FilterHome(request,home_name):
+    if len(home_name) > 0 and home_name != 'null_value':
+        all_homes = Item.objects.filter(city__contains = home_name)
+    else:
+        all_homes = Item.objects.all()
+    home_list = []
+    for curr_home in all_homes:
+        if curr_home.picture is not None:
+            home_image = curr_home.picture.url
+        else:
+            home_image = '/static/yourhome.jpg'
+        curr_dict = {
+            'home_image':home_image,
+            'city': curr_home.city,
+            'address': curr_home.address,
+            'rent': curr_home.rent,
+            'is_staff': request.user.is_staff,
+            'in_user_wishlist': curr_home in request.user.extended_reverse.home_list.all(),
+            'home_id': curr_home.id
+        }
+        home_list.append(curr_dict)
+    print(home_list)
+    return HttpResponse(json.dumps({'message':'success','data':home_list }))
 # -------------------------------------------------------------------
 
 # @login_required                                           #for all home list of a perticular user

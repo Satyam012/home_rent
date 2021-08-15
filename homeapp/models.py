@@ -25,6 +25,8 @@ class extendedUser(models.Model):
     name= models.CharField(null=True,max_length=50,default= "...")
     is_verified = models.BooleanField(default=False)
     otp_key = models.CharField(max_length=20,null=True)
+    otp_created_time = models.DateTimeField(null=True)
+    otp_used_count = models.IntegerField(default=0)
     image = models.FileField(null= True, default='user.png')
     email = models.CharField(null=True,default="...",max_length=50)
     phone_number=models.CharField(null=True,max_length=12)
