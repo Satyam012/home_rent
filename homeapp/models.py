@@ -32,10 +32,11 @@ class extendedUser(models.Model):
     phone_number=models.CharField(null=True,max_length=12)
     belongs_to = models.OneToOneField(User,related_name="extended_reverse",on_delete=models.CASCADE)
     home_list = models.ManyToManyField(Item,related_name="fav_home")
+    #reported_home_list = models.ManyToManyField(Item,related_name='reported_houses_reverse')
     def __str__(self):
         return  self.belongs_to.username +"'s Profile"
 
-          
+         
 
 
 

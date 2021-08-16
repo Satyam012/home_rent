@@ -113,6 +113,7 @@ all_category
 
 <script type="text/javascript">
   function FilterHome(event){
+    //event.target.value is oninput city name in text field
     //alert(event.target.value)
     url = `/filter_home/${event.target.value.length > 0 ? event.target.value : "null_value"}/`
     fetch(url,{method:"GET"}).then(

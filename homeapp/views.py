@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 import datetime
 from django.utils.timezone import utc
 import json
+from django.db.models import Q
 
 #-----------------------------forget password------------------------------
 
@@ -366,10 +367,10 @@ def block(request,card_id):
         raise Http404("You are not an admin")     
 
 #------------------------------Filter HOme Api---------------------------------------------
-#@login_required
+@login_required
 def FilterHome(request,home_name):
     if len(home_name) > 0 and home_name != 'null_value':
-        all_homes = Item.objects.filter(city__contains = home_name)
+        all_homes = Item.objects.filter(city__contains = home_name )
     else:
         all_homes = Item.objects.all()
     home_list = []
@@ -397,3 +398,12 @@ def FilterHome(request,home_name):
 #     user_object= User.objects.get(id= user_id)
 #     all_object = Item.objects.filter(user= user_object)
 #     return render(request,'yourhome.html',{'all_object':all_object})   
+"""
+for showing edit delete option to owner only
+all_items = Item.objects.all()
+for item in all_items:
+    if item.user == request.user:
+        Show edit and delete option
+    else:
+        don't show
+"""
