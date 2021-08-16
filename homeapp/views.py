@@ -18,6 +18,7 @@ def generate_otp_key():
     my_date_string = datetime.datetime.utcnow().isoformat()
     final_key = a + "__" + my_date_string
     return final_key
+    
 def mail(username,email,otp):  
     subject = "verification for home_Rent website"  
     msg     = "Hi "+username+',\n\nwe have received your sign-up request\n <#>Your Home-rent\'s login OTP is '+otp
