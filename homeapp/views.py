@@ -78,7 +78,7 @@ def register(request):
                     otp= generate_otp_key()
                     if extendedUser.objects.filter(otp_key = otp).exists() is False:
                         break
-                print(otp)
+                # print(otp)
                 user= User.objects.create_user(username = username, password = password1)
                 user.save()
                 my_extend_user = extendedUser(belongs_to= user,email=email,name=username,is_verified = False,otp_key= otp, otp_created_time = datetime.datetime.utcnow())
@@ -98,7 +98,7 @@ def otp_submit(request):
         token_generated_date = otp_extend_user.otp_created_time
         curr_time = datetime.datetime.utcnow().replace(tzinfo=utc)
         diff = curr_time - token_generated_date #diff is a time delta object not datetime object
-        print(diff.seconds,'diff resend debug')
+        # print(diff.seconds,'diff resend debug')
         if diff.seconds < 30:
             return render(request,'otp.html',{'message':"Please Wait 30 seconds",'otp_user_id':otp_user_id}) 
         while True:

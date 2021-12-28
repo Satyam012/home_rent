@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'home_rent.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'homerent',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': '1234',
     }
 }
 
@@ -100,11 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-EMAIL_USE_TLS = True  
-EMAIL_HOST = 'smtp.gmail.com'  
-EMAIL_PORT = 587  
-EMAIL_HOST_USER = 'homerent0068@gmail.com'  
-EMAIL_HOST_PASSWORD = 'Hrent@68' 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
